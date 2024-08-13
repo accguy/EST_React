@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ko-KR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title></title>
+    <style></style>
+  </head>
+  <body>
+    <article class="parent">
+      <figure>
+        <img
+          class="figImg"
+          src="https://file.mk.co.kr/meet/neds/2021/07/image_readtop_2021_654175_16256093474708254.jpg"
+          alt=""
+        />
+        <figcaption class="figCap">
+          유재석씨가 수상식에서 환하게 웃고 있다.
+        </figcaption>
+      </figure>
+    </article>
+  </body>
+  <script>
+    // const $article = document.querySelector(".parent");
+    // for (let i = 0; i < 10; i++) {
+    //   const $clone = $article.cloneNode(true);
+    //   document.body.appendChild($clone);
+    // }
+
+    const $article = document.querySelector(".parent");
+
+    // DocumentFragment는 메모리에서 DOM 조작을 할 때 사용됩니다.
+    // 여러 개의 요소를 한 번에 DOM에 추가할 수 있어 성능이 향상됩니다.
+    const frag = document.createDocumentFragment();
+
+    for (let i = 0; i < 10; i++) {
+      // $article 요소의 깊은 복사본을 생성합니다.
+      // true 인자는 모든 하위 노드까지 복사하겠다는 의미입니다.
+      const $clone = $article.cloneNode(true);
+      frag.append($clone);
+    }
+    document.body.appendChild(frag);
+  </script>
+</html>

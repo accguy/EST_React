@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>리액트 1분만에 추가해보기!</title>
+  </head>
+  <body>
+    <h1>내 html에 리액트 1분만에 추가해보기!</h1>
+    <p>단 1분만에 설치없이 리액트를 추가할 수 있다구요?</p>
+    <div id="root"></div>
+    <script
+      src="https://unpkg.com/react@18/umd/react.development.js"
+      crossorigin
+    ></script>
+    <script
+      src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"
+      crossorigin
+    ></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <script type="text/babel">
+      function HelloButton() {
+        // useState 훅을 사용하여 상태를 관리합니다. 초기 상태는 "Hello"입니다.
+        const [text, setText] = React.useState("Hello");
+
+        // 버튼 클릭 시 호출되는 함수입니다. 상태에 따라 버튼 텍스트를 변경합니다.
+        function handleClickButton() {
+          setText(text === "Hello" ? "Hello World" : "Hello");
+        }
+        // 버튼을 렌더링하며, 클릭 시 handleClickButton 함수가 호출됩니다.
+        return <button onClick={handleClickButton}>{text}</button>;
+      }
+
+      const app = (
+        <div>
+          <HelloButton />
+          <HelloButton />
+          <HelloButton />
+          <HelloButton />
+          <HelloButton />
+        </div>
+      );
+
+      // DOM에 리액트 컴포넌트 랜더링하기
+      const domContainer = document.querySelector("#root");
+      const root = ReactDOM.createRoot(domContainer);
+      root.render(app);
+    </script>
+  </body>
+</html>

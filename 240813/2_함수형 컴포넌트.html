@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>리액트 1분만에 추가해보기!</title>
+  </head>
+  <body>
+    <h1>내 html에 리액트 1분만에 추가해보기!</h1>
+    <p>단 1분만에 설치없이 리액트를 추가할 수 있다구요?</p>
+    <div id="root"></div>
+
+    <script
+      src="https://unpkg.com/react@18/umd/react.development.js"
+      crossorigin
+    ></script>
+    <script
+      src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"
+      crossorigin
+    ></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <script type="text/babel">
+      // HelloButton 컴포넌트를 정의합니다.
+      const HelloButton = () => {
+        return <button onClick={() => console.log("실행")}>Hello</button>;
+      };
+
+      // 여러 HelloButton 컴포넌트를 포함하는 JSX 요소를 정의합니다.
+      // JSX는 React 컴포넌트의 구조를 정의하는 문법입니다.
+      const app = (
+        <div>
+          <HelloButton />
+          <HelloButton />
+          <HelloButton />
+          <HelloButton />
+          <HelloButton />
+        </div>
+      );
+
+      // React 애플리케이션을 렌더링할 DOM 요소를 선택합니다.
+      const domContainer = document.querySelector("#root");
+      // React 18부터 도입된 ReactDOM.createRoot 함수로 루트 노드를 생성합니다.
+      const root = ReactDOM.createRoot(domContainer);
+      // 생성한 루트 노드에 JSX 요소를 렌더링합니다.
+      root.render(app);
+    </script>
+  </body>
+</html>

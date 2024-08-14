@@ -1,0 +1,18 @@
+.list-area {
+  list-style: none;
+  padding: 0;
+}
+.list-area li {
+  border: 1px solid #000;
+}
+
+/* 자기 앞에 li가 있는 li를 선택합니다. */
+/* E + F => E 요소를 뒤따르는 F요소를 선택. */
+.list-area li + li {
+  border-top: 0;
+}
+
+.list-area li.active {
+  color: #fff;
+  background-color: navy;
+}

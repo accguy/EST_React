@@ -3,6 +3,8 @@ import React, { useState } from "react";
 function App5() {
   // 어떤 변수의 값이 변경이 될때마다 화면이 렌더링이 된다면 자원의 소모가 크다.
   // 리액트에서는 useState를 통해 관리하는 변수가 업데이트 될때만 화면이 바뀐다.
+
+  // 상태화한다: 관리해야되는 대상으로 지정하겠다.
   const [like, setLike] = useState(2);
 
   function clickLike() {

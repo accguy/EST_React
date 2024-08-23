@@ -1,5 +1,6 @@
 import { useState } from "react";
 import styled from "styled-components";
+import PriceFormatter from "./PriceFormatter";
 
 const CardDiv = styled.div`
   padding: 20px;
@@ -64,7 +65,7 @@ const ProductDescription = (props) => {
   return <p>{props.children}</p>;
 };
 
-const ProductPrice = ({ won_price }) => {
+const ProductPrice = ({ price_kr }) => {
   const [currencyType, setCurrencyType] = useState("");
 
   const usd_rate = 1335.51; // 달러 환율
@@ -73,17 +74,17 @@ const ProductPrice = ({ won_price }) => {
   const getCurrentPrice = (currencyType) => {
     switch (currencyType) {
       case "won":
-        return `가격: ${(+won_price).toLocaleString("ko-KR", {
+        return `가격: ${(+price_kr).toLocaleString("ko-KR", {
           style: "currency",
           currency: "KRW",
         })}`;
       case "usd":
-        return `price: ${(+won_price / usd_rate).toLocaleString("en-US", {
+        return `price: ${(+price_kr / usd_rate).toLocaleString("en-US", {
           style: "currency",
           currency: "USD",
         })}`;
       case "eur":
-        return `price: ${(+won_price / eur_rate).toLocaleString("it-IT", {
+        return `price: ${(+price_kr / eur_rate).toLocaleString("it-IT", {
           style: "currency",
           currency: "EUR",
         })}`;
@@ -136,7 +137,8 @@ function App() {
           inventore, aliquam esse non nam consectetur minima atque consequuntur
           voluptates, eum quia.
         </ProductDescription>
-        <ProductPrice won_price="300000000" />
+        <ProductPrice price_kr="300000000" />
+        <PriceFormatter price="30000" currenyCode="KRW" />
       </ContCard>
     </>
   );

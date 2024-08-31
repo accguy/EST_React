@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- redux 5.0 부터는 CDN 지원 안함 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/redux/4.0.1/redux.js"></script>
+  </head>
+
+  <body>
+    <style>
+      .container {
+        border: 5px solid black;
+        padding: 10px;
+      }
+    </style>
+    <input type="text" class="input-content" />
+    <div id="red"></div>
+    <div id="blue"></div>
+    <div id="green"></div>
+
+    <script>
+      // 1. Reducer
+      // state: 현재 색상
+      // action: 주문 받은 색상
+      // reducer의 리턴값이 store에 state로 저장됩니다.
+      function reducer(
+        state = {
+          color: "#c4c4c4",
+          content: "hello",
+          radius: "0px",
+          borderColor: "black",
+        },
+        action
+      ) {
+        // if (state === undefined) {
+        //   return {
+        //     color: "#c4c4c4",
+        //     content: "hello",
+        //     radius: "0px",
+        //     borderColor: "black",
+        //   }; // 초기 state
+        // }
+
+        // 변경된 state를 반환
+        switch (action.type) {
+          case "CHANGE_COLOR":
+            return { ...state, color: action.color };
+
+          case "CHANGE_CONTENT":
+            return { ...state, content: action.content };
+
+          case "CHANGE_RADIUS":
+            return { ...state, radius: action.radius };
+
+          case "CHANGE_BORDER_COLOR":
+            return { ...state, borderColor: action.borderColor };
+
+          default:
+            return state;
+        }
+      }
+
+      // 2. Store
+      // Redux = CDN으로 생성된것
+      // createStore(reducer, __DEVTOOLS__)
+      var store = Redux.createStore(
+        reducer,
+        window.__REDUX_DEVTOOLS_EXTENSION__ &&
+          window.__REDUX_DEVTOOLS_EXTENSION__()
+      );
+
+      const $input = document.querySelector(".input-content");
+
+      // 3. red(): 렌더 함수
+      function red() {
+        var state = store.getState(); // 스토어에서 상태 가져오기
+
+        document.querySelector("#red").innerHTML = `
+          <div class="container" id="component_red" style="background-color:${state.color}; border-radius:${state.radius}; border-color: ${state.borderColor}">
+              <h1>${state.content}</h1>
+              <input type="button" value="red" onclick="
+                  store.dispatch({type:'CHANGE_COLOR', color:'red'});
+              ">
+              <input type="button" value="내용변경" onclick="
+                  store.dispatch({type:'CHANGE_CONTENT', content:$input.value});
+              ">
+              <input type="button" value="둥굴게" onclick="
+                  store.dispatch({type:'CHANGE_RADIUS', radius:'20px'});
+              ">
+              <input type="button" value="네모" onclick="
+                  store.dispatch({type:'CHANGE_RADIUS', radius:'0px'});
+              ">
+              <input type="button" value="테두리빨강" onclick="
+                  store.dispatch({type:'CHANGE_BORDER_COLOR', borderColor:'red'});
+              ">
+              <input type="button" value="테두리파랑" onclick="
+                  store.dispatch({type:'CHANGE_BORDER_COLOR', borderColor:'blue'});
+              ">
+              <input type="button" value="테두리초록" onclick="
+                  store.dispatch({type:'CHANGE_BORDER_COLOR', borderColor:'green'});
+              ">
+          </div>
+        `;
+        // 버튼 클릭 시
+        // store.dispatch(action)
+        // action => {type:'CHANGE_COLOR', color:'red'}
+        // : 상태를 변경할 때 필요한 정보를 담고 있는 객체
+      }
+
+      // 4. subscribe
+      // 값이 바뀔 때마다 red 함수 호출
+      // 렌더함수가 store와 연결되어 상태의 변경이 있으면 렌더링 상태도 변경됨.
+      store.subscribe(red);
+      red();
+
+      function blue() {
+        var state = store.getState();
+        document.querySelector("#blue").innerHTML = `
+            <div class="container" id="component_blue" style="background-color:${state.color}; border-radius:${state.radius}; border-color: ${state.borderColor}">
+                <h1>${state.content}</h1>
+                <input type="button" value="blue" onclick="
+                    store.dispatch({type:'CHANGE_COLOR', color:'blue'});
+                ">
+            </div>
+        `;
+      }
+      store.subscribe(blue);
+      blue();
+
+      function green() {
+        var state = store.getState();
+        document.querySelector("#green").innerHTML = `
+            <div class="container" id="component_green" style="background-color:${state.color}; border-radius:${state.radius}; border-color: ${state.borderColor}">
+                <h1>${state.content}</h1>
+                <input type="button" value="green" onclick="
+                    store.dispatch({type:'CHANGE_COLOR', color:'green'});
+                ">
+            </div>
+        `;
+      }
+      store.subscribe(green);
+      green();
+    </script>
+  </body>
+</html>

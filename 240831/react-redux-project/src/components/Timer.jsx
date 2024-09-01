@@ -2,6 +2,23 @@ import DisplayTime from "./DisplayTime";
 import InputTime from "./InputTime";
 import ButtonContainer from "./ButtonContainer";
 import { useState, useEffect, useRef } from "react";
+import styled from "styled-components";
+
+const TimerDiv = styled.div`
+  background-image: linear-gradient(
+    135deg,
+    #5572bb,
+    #374b7c
+  ); // 0deg: 12시, 시계방향
+  width: 400px;
+  height: 360px;
+  border-radius: 16px;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+`;
 
 const Timer = () => {
   // 인풋에 값이 입력이 됨.
@@ -32,19 +49,14 @@ const Timer = () => {
     const minCurrentValue = +inputMinRef.current.value;
     const secCurrentValue = +inputSecRef.current.value;
 
-    // 처음 시간을 설정할때: time이 null인 경우
-    if (!time) {
-      if (hrsCurrentValue < 0 || minCurrentValue < 0 || secCurrentValue < 0) {
-        window.alert("음수는 입력하시면 안됩니다.");
-        inputHrsRef.current.value = null;
-        inputMinRef.current.value = null;
-        inputSecRef.current.value = null;
-        return;
-      } else {
-        setTime(
-          hrsCurrentValue * 3600 + minCurrentValue * 60 + secCurrentValue
-        );
-      }
+    if (hrsCurrentValue < 0 || minCurrentValue < 0 || secCurrentValue < 0) {
+      window.alert("음수는 입력하시면 안됩니다.");
+      inputHrsRef.current.value = null;
+      inputMinRef.current.value = null;
+      inputSecRef.current.value = null;
+      return;
+    } else {
+      setTime(hrsCurrentValue * 3600 + minCurrentValue * 60 + secCurrentValue);
     }
 
     if (isPaused) {
@@ -66,11 +78,8 @@ const Timer = () => {
 
   // Reset
   const handleReset = () => {
-    setTime(null);
+    setTime(0);
     setIsRunning(false);
-    inputHrsRef.current.value = null;
-    inputMinRef.current.value = null;
-    inputSecRef.current.value = null;
   };
 
   // isRunning?
@@ -86,16 +95,33 @@ const Timer = () => {
     }
   }, [isRunning]);
 
-  // Display Time
+  // time
   useEffect(() => {
     if (time === 0) {
       setIsRunning(false);
       setTime(null);
+
+      setTimeout(() => {
+        // 동기적인 코드(alert)는 time이 0으로 바뀌자마자 바로 실행되기 때문에,
+        // React가 0을 화면에 렌더링하기 전에 alert이 먼저 뜨게 됩니다.
+        // 이 때문에 화면에 1초가 남은 상태로 표시된 상태에서 alert이 실행됩니다.
+        // setTimeout은 비동기 함수로, 콜백 함수를 이벤트 루프에 넣어 두고,
+        // 현재 실행 중인 코드가 모두 완료된 후에 실행합니다.
+        // 따라서 setTimeout 안에 alert을 넣으면, React가 화면을 0으로 렌더링한 후에 alert이 실행됩니다.
+        alert("Finish!");
+      }, 0);
     }
+    const hour = Math.floor(time / 3600);
+    const min = Math.floor((time % 3600) / 60);
+    const sec = Math.floor(time % 60);
+
+    inputHrsRef.current.value = String(hour).padStart(2, "0");
+    inputMinRef.current.value = String(min).padStart(2, "0");
+    inputSecRef.current.value = String(sec).padStart(2, "0");
   }, [time]);
 
   return (
-    <div>
+    <TimerDiv>
       <DisplayTime time={time} />
       <InputTime
         inputHrsRef={inputHrsRef}
@@ -113,7 +139,7 @@ const Timer = () => {
         isPaused={isPaused}
         time={time}
       />
-    </div>
+    </TimerDiv>
   );
 };
 

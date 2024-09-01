@@ -7,13 +7,13 @@ const DisplayTime = ({ time }) => {
 
   return (
     <div className="display-time">
-      <h1>
-        총 {time || 0}초 {time === null ? "끝!!!" : null}
-      </h1>
-      <span>{hour} 시간 </span>
-      <span>{min} 분 </span>
-      <span>{sec} 초 </span>
-      <span>남았습니다.</span>
+      <h1>TIMER</h1>
+      {/* <h2>
+        time: {time || 0} {time ? null : "끝!"}
+      </h2>
+      <span>{String(hour).padStart(2, "0")} : </span>
+      <span>{String(min).padStart(2, "0")} : </span>
+      <span>{String(sec).padStart(2, "0")} </span> */}
     </div>
   );
 };

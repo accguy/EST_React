@@ -15,9 +15,6 @@ const Timer = () => {
   // 그렇다면 최상위에 time을 두고 시, 분, 초도 상위에 둘까?
   // 각각의 디스플레이에서 setState로
   const [time, setTime] = useState(null);
-  const [hour, setHour] = useState(null);
-  const [min, setMin] = useState(null);
-  const [sec, setSec] = useState(null);
   const [isRunning, setIsRunning] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
   const intervalId = useRef(null);
@@ -91,10 +88,6 @@ const Timer = () => {
 
   // Display Time
   useEffect(() => {
-    setHour(Math.floor(time / 3600));
-    setMin(Math.floor((time % 3600) / 60));
-    setSec(Math.floor(time % 60));
-
     if (time === 0) {
       setIsRunning(false);
       setTime(null);
@@ -103,14 +96,12 @@ const Timer = () => {
 
   return (
     <div>
-      <div>
-        <DisplayTime time={time} hour={hour} min={min} sec={sec} />
-        <InputTime
-          inputHrsRef={inputHrsRef}
-          inputMinRef={inputMinRef}
-          inputSecRef={inputSecRef}
-        />
-      </div>
+      <DisplayTime time={time} />
+      <InputTime
+        inputHrsRef={inputHrsRef}
+        inputMinRef={inputMinRef}
+        inputSecRef={inputSecRef}
+      />
       <ButtonContainer
         startBtnRef={startBtnRef}
         pauseBtnRef={pauseBtnRef}

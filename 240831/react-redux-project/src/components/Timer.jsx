@@ -34,6 +34,7 @@ const Timer = () => {
   const [time, setTime] = useState(null);
   const [isRunning, setIsRunning] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
+
   const intervalId = useRef(null);
 
   const inputHrsRef = useRef();
@@ -51,9 +52,12 @@ const Timer = () => {
 
     if (hrsCurrentValue < 0 || minCurrentValue < 0 || secCurrentValue < 0) {
       window.alert("음수는 입력하시면 안됩니다.");
-      inputHrsRef.current.value = null;
-      inputMinRef.current.value = null;
-      inputSecRef.current.value = null;
+      setTime(null);
+
+      // 음수가 입력된 경우 인풋 필드 초기화
+      inputHrsRef.current.value = "00";
+      inputMinRef.current.value = "00";
+      inputSecRef.current.value = "00";
       return;
     } else {
       setTime(hrsCurrentValue * 3600 + minCurrentValue * 60 + secCurrentValue);
@@ -78,7 +82,12 @@ const Timer = () => {
 
   // Reset
   const handleReset = () => {
-    setTime(0);
+    // 인풋 필드 초기화
+    inputHrsRef.current.value = "00";
+    inputMinRef.current.value = "00";
+    inputSecRef.current.value = "00";
+
+    setTime(null);
     setIsRunning(false);
   };
 
@@ -101,16 +110,26 @@ const Timer = () => {
       setIsRunning(false);
       setTime(null);
 
+      // 이미 time이 null일때 reset버튼을 누르거나
+      // 음수를 입력해도 time값이 null로 그대로이기 때문에
+      // useEffect가 실행되지 않아서 0읋 렌더링이 안됨
+      // => 그냥 인풋값을 직접 "00"으로 초기화해주면됨.
+
       setTimeout(() => {
+        // <setTimeout 안에 alert를 넣은 이유>
+        //
         // 동기적인 코드(alert)는 time이 0으로 바뀌자마자 바로 실행되기 때문에,
         // React가 0을 화면에 렌더링하기 전에 alert이 먼저 뜨게 됩니다.
         // 이 때문에 화면에 1초가 남은 상태로 표시된 상태에서 alert이 실행됩니다.
+        //
         // setTimeout은 비동기 함수로, 콜백 함수를 이벤트 루프에 넣어 두고,
         // 현재 실행 중인 코드가 모두 완료된 후에 실행합니다.
         // 따라서 setTimeout 안에 alert을 넣으면, React가 화면을 0으로 렌더링한 후에 alert이 실행됩니다.
         alert("Finish!");
-      }, 0);
+      }, 10);
     }
+
+    // typeof(null/30) = number
     const hour = Math.floor(time / 3600);
     const min = Math.floor((time % 3600) / 60);
     const sec = Math.floor(time % 60);

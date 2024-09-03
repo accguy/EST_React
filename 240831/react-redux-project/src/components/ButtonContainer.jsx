@@ -2,6 +2,8 @@ import styled from "styled-components";
 import iconStart from "../assets/images/icon/icon-start.png";
 import iconPause from "../assets/images/icon/icon-pause.png";
 import iconReset from "../assets/images/icon/icon-reset.png";
+import iconStartDisabled from "../assets/images/icon/icon-start-disabled.png";
+import iconResetDisabled from "../assets/images/icon/icon-reset-disabled.png";
 
 const BtnContainer = styled.div`
   display: flex;
@@ -34,6 +36,14 @@ const StartBtn = styled(Btn)`
   &::before {
     background-image: url(${iconStart});
   }
+  &:disabled {
+    color: #617199;
+    background-color: #324577;
+
+    &::before {
+      background-image: url(${iconStartDisabled});
+    }
+  }
 `;
 const PauseBtn = styled(Btn)`
   background-color: #15c2b8;
@@ -45,6 +55,14 @@ const ResetBtn = styled(Btn)`
   background-color: #fb7099;
   &::before {
     background-image: url(${iconReset});
+  }
+  &:disabled {
+    color: #617199;
+    background-color: #324577;
+
+    &::before {
+      background-image: url(${iconResetDisabled});
+    }
   }
 `;
 
@@ -66,7 +84,7 @@ const ButtonContainer = ({
           className="start-btn"
           ref={startBtnRef}
           onClick={handleStart}
-          disabled={isRunning}
+          disabled
         >
           START
         </StartBtn>
@@ -82,7 +100,12 @@ const ButtonContainer = ({
         </PauseBtn>
       ) : null}
 
-      <ResetBtn className="reset-btn" ref={resetBtnRef} onClick={handleReset}>
+      <ResetBtn
+        className="reset-btn"
+        ref={resetBtnRef}
+        onClick={handleReset}
+        disabled
+      >
         RESET
       </ResetBtn>
     </BtnContainer>

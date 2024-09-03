@@ -76,6 +76,9 @@ const ButtonContainer = ({
   isRunning,
   isPaused,
   time,
+  inputHrsVal,
+  inputMinVal,
+  inputSecVal,
 }) => {
   return (
     <BtnContainer className="button-container">
@@ -84,7 +87,7 @@ const ButtonContainer = ({
           className="start-btn"
           ref={startBtnRef}
           onClick={handleStart}
-          disabled
+          disabled={inputHrsVal + inputMinVal + inputSecVal == 0}
         >
           START
         </StartBtn>
@@ -104,7 +107,7 @@ const ButtonContainer = ({
         className="reset-btn"
         ref={resetBtnRef}
         onClick={handleReset}
-        disabled
+        disabled={inputHrsVal + inputMinVal + inputSecVal == 0}
       >
         RESET
       </ResetBtn>

@@ -37,9 +37,14 @@ const Timer = () => {
 
   const intervalId = useRef(null);
 
+  const [inputHrsVal, setInputHrsVal] = useState("");
+  const [inputMinVal, setInputMinVal] = useState("");
+  const [inputSecVal, setInputSecVal] = useState("");
+
   const inputHrsRef = useRef();
   const inputMinRef = useRef();
   const inputSecRef = useRef();
+
   const startBtnRef = useRef();
   const pauseBtnRef = useRef();
   const resetBtnRef = useRef();
@@ -55,9 +60,9 @@ const Timer = () => {
       setTime(null);
 
       // 음수가 입력된 경우 인풋 필드 초기화
-      inputHrsRef.current.value = "00";
-      inputMinRef.current.value = "00";
-      inputSecRef.current.value = "00";
+      setInputHrsVal("");
+      setInputMinVal("");
+      setInputSecVal("");
       return;
     } else {
       setTime(hrsCurrentValue * 3600 + minCurrentValue * 60 + secCurrentValue);
@@ -83,9 +88,9 @@ const Timer = () => {
   // Reset
   const handleReset = () => {
     // 인풋 필드 초기화
-    inputHrsRef.current.value = "00";
-    inputMinRef.current.value = "00";
-    inputSecRef.current.value = "00";
+    setInputHrsVal("");
+    setInputMinVal("");
+    setInputSecVal("");
 
     setTime(null);
     setIsRunning(false);
@@ -129,25 +134,35 @@ const Timer = () => {
       }, 10);
     }
 
-    // typeof(null/30) = number
-    const hour = Math.floor(time / 3600);
-    const min = Math.floor((time % 3600) / 60);
-    const sec = Math.floor(time % 60);
+    if (time !== null) {
+      const hour = Math.floor(time / 3600);
+      const min = Math.floor((time % 3600) / 60);
+      const sec = Math.floor(time % 60);
 
-    inputHrsRef.current.value = String(hour).padStart(2, "0");
-    inputMinRef.current.value = String(min).padStart(2, "0");
-    inputSecRef.current.value = String(sec).padStart(2, "0");
+      setInputHrsVal(String(hour).padStart(2, "0"));
+      setInputMinVal(String(min).padStart(2, "0"));
+      setInputSecVal(String(sec).padStart(2, "0"));
+    }
   }, [time]);
 
   return (
     <TimerDiv>
       <DisplayTime time={time} />
       <InputTime
+        inputHrsVal={inputHrsVal}
+        inputMinVal={inputMinVal}
+        inputSecVal={inputSecVal}
+        setInputHrsVal={setInputHrsVal}
+        setInputMinVal={setInputMinVal}
+        setInputSecVal={setInputSecVal}
         inputHrsRef={inputHrsRef}
         inputMinRef={inputMinRef}
         inputSecRef={inputSecRef}
       />
       <ButtonContainer
+        inputHrsVal={inputHrsVal}
+        inputMinVal={inputMinVal}
+        inputSecVal={inputSecVal}
         startBtnRef={startBtnRef}
         pauseBtnRef={pauseBtnRef}
         resetBtnRef={resetBtnRef}

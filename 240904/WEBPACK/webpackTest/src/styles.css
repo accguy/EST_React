@@ -1,0 +1,9 @@
+body {
+  background: darkolivegreen;
+}
+div {
+  width: 1300px;
+  height: 1300px;
+  background-image: url(./rickdom.jpg);
+  /* background-repeat: no-repeat; */
+}

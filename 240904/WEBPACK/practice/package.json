@@ -1,0 +1,20 @@
+{
+  "devDependencies": {
+    "css-loader": "^7.1.2",
+    "style-loader": "^4.0.0",
+    "webpack": "^5.94.0",
+    "webpack-cli": "^5.1.4"
+  },
+  "dependencies": {
+    "react": "^18.3.1"
+  },
+  "name": "practice",
+  "version": "1.0.0",
+  "description": "webpack 연습용",
+  "main": "webpack.config.js",
+  "scripts": {
+    "build": "webpack"
+  },
+  "author": "accguy",
+  "license": "ISC"
+}

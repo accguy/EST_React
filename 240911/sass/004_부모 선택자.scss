@@ -1,0 +1,12 @@
+.box {
+  height: 100px;
+  width: 100px;
+  background-color: red;
+  transition: all 0.3s;
+  &:hover {
+    // 일반 css에서도 사용가능
+    height: 200px;
+    width: 200px;
+    background-color: blue;
+  }
+}

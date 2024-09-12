@@ -1,4 +1,3 @@
-import "./App.css";
 import Todo from "./components/Todo";
 
 function App() {
@@ -8,5 +7,4 @@ function App() {
     </div>
   );
 }
-
 export default App;
